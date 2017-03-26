@@ -23,43 +23,35 @@ var cards = [
 
 var cardsInPlay = [];
 
-var checkForMatch = function() {
-	if (cardsInPlay[0] === cardsInPlay[1]) {
-		console.log("You found a match!");
-	} else {
-		alert("Sorry, try again!");
+	var checkForMatch = function() {
+		if (cardsInPlay[0] === cardsInPlay[1]) {
+			console.log("You found a match!");
+		} else {
+			console.log("Sorry, try again!");
+		}
+	}
+
+	var flipCard = function () {
+		var cardId = this.getAttribute('data-id');
+		console.log("User flipped " + cards[cardId].rank);
+		console.log("User flipped " + cards[cardId].cardImage);
+		console.log("User flipped " + cards[cardId].suit);
+		this.setAttribute("src", cards[cardId].cardImage);
+		cardsInPlay.push(cards[cardId].rank);
+		if (cardsInPlay.length === 2) {					// unit 8
+		checkForMatch();
+		}	
+
+	}
+
+	var createBoard = function () {
+		for (var i = 0; i < cards.length; i++) {
+			var cardElement = document.createElement('img');
+			cardElement.setAttribute('src', "images/back.png");
+			cardElement.setAttribute('data-id', i);
+			cardElement.addEventListener('click', 'flipCard');
+			document.getElementById('game-board').appendChild(cardElement);
 	}
 }
 
-var flipCard = function (cardId) {
-	console.log("User flipped " + cards[cardId].rank)
-	console.log("User flipped " + cards[cardId].cardImage)
-	console.log("User flipped " + cards[cardId].suit)
-	if (cardsInPlay.length === 2) {					// unit 8
-	checkForMatch();
-	}	
-
-}
-	//cardsInPlay.push(cardId);????
-flipCard(0);
-flipCard(2);
-
-// eliminated code
-/*
-var cardOne = "queen";
-var cardTwo = "queen";
-var cardThree = "king";
-var cardFour = "king";
-
-console.log("User flipped " + cardOne);
-console.log("user flipped " + cardThree);
-
-var cardOne = cards[0];
-cardsInPlay.push(cardOne);
-console.log("User flipped " + cardOne);
-
-var cardTwo = cards[2];
-cardsInPlay.push(cardTwo);
-console.log("User flipped " + cardTwo);
-
-*/
+		createBoard();
